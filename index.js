@@ -19,7 +19,7 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: "https://oauth-social.herokuapp.com/",
+    origin: "https://illustrious-sorbet-b7ae28.netlify.app/",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
