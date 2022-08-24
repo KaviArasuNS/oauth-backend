@@ -6,9 +6,7 @@ const passport = require("passport");
 const authRoute = require("./routes/auth");
 require("dotenv").config();
 
-// const ORGIN = "http://localhost:3000";
-
-const ORGIN = "https://oauth-kavi.netlify.app";
+const whitelist = ["http://localhost:3000", "https://oauth-kavi.netlify.app"];
 
 const app = express();
 
@@ -23,7 +21,7 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: `${ORGIN}`,
+    origin: whitelist,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
