@@ -6,6 +6,10 @@ const passport = require("passport");
 const authRoute = require("./routes/auth");
 require("dotenv").config();
 
+// const ORGIN = "http://localhost:3000";
+
+// const ORGIN = "https://master--illustrious-sorbet-b7ae28.netlify.app";
+
 const app = express();
 
 const PORTL = process.env.PORT;
@@ -17,13 +21,15 @@ const PORT = app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(
-  cors({
-    origin: "https://illustrious-sorbet-b7ae28.netlify.app/",
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: `${ORGIN}`,
+//     methods: "GET,POST,PUT,DELETE",
+//     credentials: true,
+//   })
+// );
+
+app.use(cors());
 
 app.get("/", function (req, res) {
   res.send("Hello World");
