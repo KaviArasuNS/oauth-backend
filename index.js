@@ -8,7 +8,7 @@ require("dotenv").config();
 
 // const ORGIN = "http://localhost:3000";
 
-const ORGIN = "https://illustrious-sorbet-b7ae28.netlify.app";
+const ORGIN = "https://oauth-kavi.netlify.app";
 
 const app = express();
 
