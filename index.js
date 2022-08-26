@@ -35,6 +35,15 @@ app.post("/chartjs", async function (req, res) {
   res.send(result);
 });
 
+app.get("/chartjs", async function (req, res) {
+  const result = await client
+    .db("guvi")
+    .collection("chartjs")
+    .find({})
+    .toArray();
+  res.send(result);
+});
+
 app.listen(PORT, () => {
   console.log(`server is running on port ${PORT}`);
 });
