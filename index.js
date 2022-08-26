@@ -1,40 +1,40 @@
-const cookieSession = require("cookie-session");
-const express = require("express");
-const cors = require("cors");
-const passportSetup = require("./passport");
-const passport = require("passport");
-const authRoute = require("./routes/auth");
-require("dotenv").config();
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { MongoClient } from "mongodb";
 
-const whitelist = ["http://localhost:3000", "https://oauth-kavi.netlify.app"];
-
+dotenv.config();
 const app = express();
+app.use(cors());
 
-const PORTL = process.env.PORT;
+const PORT = process.env.PORT;
+app.use(express.json());
 
-const PORT = app.use(
-  cookieSession({ name: "session", keys: ["kavi"], maxAge: 24 * 60 * 60 * 100 })
-);
+const MONGO_URL = process.env.MONGO_URL;
 
-app.use(passport.initialize());
-app.use(passport.session());
+async function createConnection() {
+  const client = new MongoClient(MONGO_URL);
+  await client.connect();
+  console.log("MongoDB is connected");
+  return client;
+}
 
-app.use(
-  cors({
-    origin: whitelist,
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
-  })
-);
+export const client = await createConnection();
 
-// app.use(cors());
+// Capstone Database
 
 app.get("/", function (req, res) {
-  res.send("Hello World");
+  res.send("Great! Server is running and this is the homepage");
 });
 
-app.use("/auth", authRoute);
+// CHART JS ROUTER
+app.post("/chartjs", async function (req, res) {
+  const data = req.body;
+  console.log(data);
+  const result = await client.db("guvi").collection("chartjs").insertMany(data);
+  res.send(result);
+});
 
-app.listen(PORTL, () => {
-  console.log(`Server is running at port ${PORTL}!`);
+app.listen(PORT, () => {
+  console.log(`server is running on port ${PORT}`);
 });
